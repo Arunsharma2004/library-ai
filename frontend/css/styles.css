@@ -94,7 +94,8 @@ th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(-
 thead th { background: #f9fafb; font-size: 0.85rem; color: var(--muted); }
 tbody tr:last-child td { border-bottom: none; }
 tbody tr:hover { background: #f9fafb; }
-td.actions { white-space: nowrap; display: flex; gap: 0.5rem; }
+td.actions { white-space: nowrap; }
+td.actions button + button { margin-left: 0.5rem; }
 #empty-state { text-align: center; color: var(--muted); padding: 2rem 0; }
 
 .badge { padding: 0.15rem 0.6rem; border-radius: 999px; font-size: 0.85rem; }
