@@ -67,3 +67,25 @@ const booksApi = {
     return request(`/books/${id}`, { method: "DELETE" });
   },
 };
+
+const membersApi = {
+  list(filters = {}) {
+    const params = new URLSearchParams();
+    if (filters.search) params.set("search", filters.search);
+    if (filters.activeOnly) params.set("active_only", "true");
+    const query = params.toString();
+    return request("/members" + (query ? "?" + query : ""));
+  },
+
+  create(member) {
+    return request("/members", { method: "POST", body: JSON.stringify(member) });
+  },
+
+  update(id, changes) {
+    return request(`/members/${id}`, { method: "PATCH", body: JSON.stringify(changes) });
+  },
+
+  remove(id) {
+    return request(`/members/${id}`, { method: "DELETE" });
+  },
+};

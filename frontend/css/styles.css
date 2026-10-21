@@ -123,3 +123,16 @@ dialog h2 { margin-top: 0; }
 @media (max-width: 600px) {
   .toolbar > * { width: 100%; }
 }
+
+/* ---------- Navigation ---------- */
+nav { margin-top: 0.5rem; display: flex; gap: 1rem; }
+nav a { color: #cbd5e1; text-decoration: none; padding-bottom: 0.2rem; }
+nav a:hover { color: #fff; }
+nav a.active { color: #fff; border-bottom: 2px solid var(--primary); }
+
+/* The members form uses the same look as the book form. */
+#member-form { display: grid; gap: 0.75rem; }
+#member-form label { display: grid; gap: 0.25rem; font-weight: 600; font-size: 0.9rem; }
+#member-form input { width: 100%; font-weight: 400; }
+#member-form .check-row { display: flex; align-items: center; gap: 0.5rem; }
+#member-form .check-row input { width: auto; }

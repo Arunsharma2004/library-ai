@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Library - Members</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>AI Library</h1>
+    <nav>
+      <a href="/">Books</a>
+      <a href="/members.html" class="active">Members</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="toolbar">
+      <input type="search" id="search-input" placeholder="Search by name or email">
+      <label class="checkbox-label">
+        <input type="checkbox" id="active-only"> Active only
+      </label>
+      <button type="button" id="add-member-btn">Add member</button>
+    </section>
+
+    <p id="message" role="status"></p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="members-body"></tbody>
+      </table>
+    </div>
+    <p id="empty-state" hidden>No members found.</p>
+  </main>
+
+  <dialog id="member-dialog">
+    <form id="member-form">
+      <h2 id="dialog-title">Add member</h2>
+
+      <label>Name
+        <input type="text" id="name" required maxlength="255">
+      </label>
+      <label>Email
+        <input type="email" id="email" required maxlength="255">
+      </label>
+      <label>Phone
+        <input type="text" id="phone" maxlength="30">
+      </label>
+      <label class="check-row">
+        <input type="checkbox" id="is-active" checked> Active member
+      </label>
+
+      <p id="form-error" role="alert"></p>
+
+      <div class="dialog-actions">
+        <button type="button" id="cancel-btn" class="btn-secondary">Cancel</button>
+        <button type="submit">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/api.js"></script>
+  <script src="js/members.js"></script>
+</body>
+</html>
