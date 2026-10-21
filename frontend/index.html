@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Library</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>AI Library</h1>
+    <p>Book management</p>
+  </header>
+
+  <main>
+    <section class="toolbar">
+      <input type="search" id="search-input" placeholder="Search by title, author or ISBN">
+      <input type="text" id="category-input" placeholder="Category">
+      <label class="checkbox-label">
+        <input type="checkbox" id="available-only"> Available only
+      </label>
+      <button type="button" id="add-book-btn">Add book</button>
+    </section>
+
+    <p id="message" role="status"></p>
+
+    <div class="table-wrapper">
+      <table id="books-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Category</th>
+            <th>Available</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="books-body"></tbody>
+      </table>
+    </div>
+    <p id="empty-state" hidden>No books found.</p>
+  </main>
+
+  <!-- Add / edit form. A <dialog> is a built-in popup window. -->
+  <dialog id="book-dialog">
+    <form id="book-form">
+      <h2 id="dialog-title">Add book</h2>
+
+      <label>Title
+        <input type="text" id="title" required maxlength="255">
+      </label>
+      <label>Author
+        <input type="text" id="author" required maxlength="255">
+      </label>
+      <label>ISBN
+        <input type="text" id="isbn" maxlength="20">
+      </label>
+      <label>Category
+        <input type="text" id="category" maxlength="100">
+      </label>
+      <label>Published year
+        <input type="number" id="published-year" min="1000" max="2100">
+      </label>
+      <label>Total copies
+        <input type="number" id="total-copies" min="1" value="1" required>
+      </label>
+      <label>Description
+        <textarea id="description" rows="3"></textarea>
+      </label>
+
+      <p id="form-error" role="alert"></p>
+
+      <div class="dialog-actions">
+        <button type="button" id="cancel-btn">Cancel</button>
+        <button type="submit">Save</button>
+      </div>
+    </form>
+  </dialog>
+<script src="js/api.js"></script>
+<script src="js/books.js"></script>
+</body>
+</html>
