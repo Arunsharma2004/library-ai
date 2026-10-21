@@ -2,8 +2,8 @@ from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
 from app.models.book import Book
-from app.schemas.book import BookCreate
-from app.services.errors import DuplicateError, NotFoundError
+from app.schemas.book import BookCreate, BookUpdate
+from app.services.errors import BusinessRuleError, DuplicateError, NotFoundError
 
 
 def get_book(db: Session, book_id: int) -> Book:
@@ -51,3 +51,42 @@ def list_books(
 
     query = query.order_by(Book.title).offset(skip).limit(limit)
     return list(db.scalars(query))
+
+REQUIRED_FIELDS = {"title", "author", "total_copies"}
+
+
+def update_book(db: Session, book_id: int, data: BookUpdate) -> Book:
+    book = get_book(db, book_id)
+
+    # exclude_unset=True keeps only the fields the client actually sent.
+    changes = data.model_dump(exclude_unset=True)
+    # Required fields cannot be set to null, so ignore those.
+    changes = {k: v for k, v in changes.items() if not (v is None and k in REQUIRED_FIELDS)}
+
+    new_isbn = changes.get("isbn")
+    if new_isbn and new_isbn != book.isbn:
+        if db.scalar(select(Book).where(Book.isbn == new_isbn)):
+            raise DuplicateError(f"A book with ISBN {new_isbn} already exists")
+
+    if "total_copies" in changes:
+        borrowed = book.total_copies - book.available_copies
+        if changes["total_copies"] < borrowed:
+            raise BusinessRuleError(
+                f"Total copies cannot be below {borrowed}, "
+                f"because {borrowed} copies are currently borrowed"
+            )
+        # Keep the number of borrowed copies the same.
+        book.available_copies = changes["total_copies"] - borrowed
+
+    for field, value in changes.items():
+        setattr(book, field, value)
+
+    db.commit()
+    db.refresh(book)
+    return book
+
+
+def delete_book(db: Session, book_id: int) -> None:
+    book = get_book(db, book_id)
+    db.delete(book)
+    db.commit()

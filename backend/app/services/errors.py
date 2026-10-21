@@ -11,3 +11,8 @@ class NotFoundError(Exception):
 
 class DuplicateError(Exception):
     """The record would break a uniqueness rule (e.g. same ISBN)."""
+
+    
+
+class BusinessRuleError(Exception):
+    """The action is not allowed by a library rule."""
