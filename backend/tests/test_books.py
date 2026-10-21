@@ -144,4 +144,4 @@ def test_delete_book(client):
 def test_delete_missing_book_returns_404(client):
     response = client.delete("/api/books/999")
 
-    assert response.status_code == 404
+    assert response.status_code == 404  
