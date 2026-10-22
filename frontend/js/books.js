@@ -182,4 +182,34 @@ form.addEventListener("submit", async (event) => {
 document.getElementById("add-book-btn").addEventListener("click", () => openDialog());
 document.getElementById("cancel-btn").addEventListener("click", () => dialog.close());
 
+// ---------- AI description ----------
+const describeButton = document.getElementById("ai-describe-btn");
+
+describeButton.addEventListener("click", async () => {
+  const title = document.getElementById("title").value.trim();
+  const author = document.getElementById("author").value.trim();
+  if (!title || !author) {
+    formError.textContent = "Enter the title and author first.";
+    return;
+  }
+
+  formError.textContent = "";
+  describeButton.disabled = true;
+  describeButton.textContent = "Writing...";
+  try {
+    const year = document.getElementById("published-year").value;
+    const result = await aiApi.describe({
+      title,
+      author,
+      category: emptyToNull(document.getElementById("category").value),
+      published_year: year === "" ? null : Number(year),
+    });
+    document.getElementById("description").value = result.description;
+  } catch (error) {
+    formError.textContent = error.message;
+  } finally {
+    describeButton.disabled = false;
+    describeButton.textContent = "Write description with AI";
+  }
+});
 loadBooks(); // load the books when the page opens

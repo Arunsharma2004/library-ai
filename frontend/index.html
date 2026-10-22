@@ -70,8 +70,12 @@
         <input type="number" id="total-copies" min="1" value="1" required>
       </label>
       <label>Description
-        <textarea id="description" rows="3"></textarea>
+      <textarea id="description" rows="3"></textarea>
       </label>
+      <div class="ai-row">
+        <button type="button" id="ai-describe-btn" class="btn-secondary btn-small">Write description with AI</button>
+        <span class="muted">Please review the text before saving.</span>
+      </div>
 
       <p id="form-error" role="alert"></p>
 

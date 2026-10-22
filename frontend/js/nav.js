@@ -5,6 +5,7 @@ const NAV_LINKS = [
   { href: "/members.html", label: "Members" },
   { href: "/borrowing.html", label: "Borrowing" },
   { href: "/recommend.html", label: "Find a book" },
+  { href: "/assistant.html", label: "Assistant" },
 ];
 
 (async function () {

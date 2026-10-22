@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Library - Assistant</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>AI Library</h1>
+  </header>
+
+  <main>
+    <div class="chat-box">
+      <div id="chat-log"></div>
+      <form id="chat-form" class="chat-form">
+        <input type="text" id="chat-input" required maxlength="1000" autocomplete="off"
+               placeholder="Ask for a book, or ask about the library...">
+        <button type="submit" id="send-btn">Send</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/assistant.js"></script>
+</body>
+</html>

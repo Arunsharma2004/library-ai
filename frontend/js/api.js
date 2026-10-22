@@ -145,4 +145,18 @@ const aiApi = {
       body: JSON.stringify(answers),
     });
   },
+
+  chat(messages) {
+    return request("/ai/chat", {
+      method: "POST",
+      body: JSON.stringify({ messages }),
+    });
+  },
+
+  describe(book) {
+    return request("/ai/describe", {
+      method: "POST",
+      body: JSON.stringify(book),
+    });
+  },
 };
