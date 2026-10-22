@@ -265,3 +265,6 @@ select {
 body:not(.role-staff) .staff-only {
   display: none !important;
 }
+/* ---------- My account ---------- */
+.account-summary { margin-bottom: 1.5rem; }
+.account-summary h2 { margin-bottom: 0.2rem; }

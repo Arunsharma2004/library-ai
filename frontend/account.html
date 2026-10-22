@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Library - My account</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>AI Library</h1>
+    <nav></nav>
+  </header>
+
+  <main>
+    <section class="account-summary">
+      <h2 id="account-name">My account</h2>
+      <p id="account-email" class="muted"></p>
+      <p>
+        <span id="account-status" class="badge" hidden></span>
+        <span id="account-note" class="muted"></span>
+      </p>
+    </section>
+
+    <p id="account-message" role="status"></p>
+
+    <section id="loans-section" hidden>
+      <h3>My books</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Book</th>
+              <th>Issued</th>
+              <th>Due</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="loans-body"></tbody>
+        </table>
+      </div>
+      <p id="loans-empty" hidden>You have not borrowed any books yet.</p>
+    </section>
+  </main>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/account.js"></script>
+</body>
+</html>

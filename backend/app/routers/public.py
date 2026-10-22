@@ -28,12 +28,16 @@ def limit_join_requests(request: Request) -> None:
     dependencies=[Depends(limit_join_requests)],
 )
 def join_library(data: JoinRequest, request: Request, db: Session = Depends(get_db)):
-    join_service.request_to_join(db, data)
+    member_id = join_service.request_to_join(db, data)
 
-    # The visitor can now browse and use the AI. Borrowing still needs staff approval.
     # If a staff member is already signed in, leave their session as it is.
     if "user_id" not in request.session:
+        # The visitor can browse and use the AI. Borrowing still needs staff approval.
         request.session["visitor"] = True
+        # Remember which member this browser belongs to, so "My account" can show it.
+        # (None when the email already existed: that person is NOT linked.)
+        if member_id is not None:
+            request.session["member_id"] = member_id
 
     return {
         "message": "Thank you! You can now browse books and use the AI. "
