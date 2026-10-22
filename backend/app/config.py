@@ -20,5 +20,9 @@ class Settings:
     # Set COOKIE_SECURE=true when the site runs on https.
     COOKIE_SECURE: bool = os.getenv("COOKIE_SECURE", "false").lower() == "true"
 
+    # AI. The key lives only in backend/.env, never in the code.
+    GEMINI_API_KEY: str | None = os.getenv("GEMINI_API_KEY")
+    GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
+
 
 settings = Settings()
