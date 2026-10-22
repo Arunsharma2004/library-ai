@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.models.book import Book
 from app.schemas.book import BookCreate, BookUpdate
+from app.models.borrow import BorrowRecord
 from app.services.errors import BusinessRuleError, DuplicateError, NotFoundError
 
 
@@ -88,5 +89,10 @@ def update_book(db: Session, book_id: int, data: BookUpdate) -> Book:
 
 def delete_book(db: Session, book_id: int) -> None:
     book = get_book(db, book_id)
+    has_history = db.scalar(
+        select(BorrowRecord.id).where(BorrowRecord.book_id == book_id).limit(1)
+    )
+    if has_history is not None:
+        raise BusinessRuleError("This book has borrowing records, so it cannot be deleted")
     db.delete(book)
     db.commit()

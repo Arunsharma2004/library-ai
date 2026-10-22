@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.schemas.member import MemberCreate, MemberRead, MemberUpdate
 from app.services import member_service
-from app.services.errors import DuplicateError, NotFoundError
+from app.services.errors import BusinessRuleError, DuplicateError, NotFoundError
 
 router = APIRouter(prefix="/api/members", tags=["Members"])
 
@@ -52,3 +52,5 @@ def delete_member(member_id: int, db: Session = Depends(get_db)):
         member_service.delete_member(db, member_id)
     except NotFoundError as error:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(error))
+    except BusinessRuleError as error:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(error))

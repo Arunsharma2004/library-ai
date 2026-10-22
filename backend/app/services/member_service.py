@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 
 from app.models.member import Member
 from app.schemas.member import MemberCreate, MemberUpdate
-from app.services.errors import DuplicateError, NotFoundError
+from app.models.borrow import BorrowRecord
+from app.services.errors import BusinessRuleError, DuplicateError, NotFoundError
 
 REQUIRED_FIELDS = {"name", "email", "is_active"}
 
@@ -67,8 +68,15 @@ def update_member(db: Session, member_id: int, data: MemberUpdate) -> Member:
     db.refresh(member)
     return member
 
-
 def delete_member(db: Session, member_id: int) -> None:
     member = get_member(db, member_id)
+    has_history = db.scalar(
+        select(BorrowRecord.id).where(BorrowRecord.member_id == member_id).limit(1)
+    )
+    if has_history is not None:
+        raise BusinessRuleError(
+            "This member has borrowing records, so they cannot be deleted. "
+            "Deactivate them instead."
+        )
     db.delete(member)
     db.commit()

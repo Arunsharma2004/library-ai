@@ -52,3 +52,5 @@ def delete_book(book_id: int, db: Session = Depends(get_db)):
         book_service.delete_book(db, book_id)
     except NotFoundError as error:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(error))
+    except BusinessRuleError as error:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(error))
