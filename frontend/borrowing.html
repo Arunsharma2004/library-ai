@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Library - Borrowing</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>AI Library</h1>
+    <nav>
+      <a href="/">Books</a>
+      <a href="/members.html">Members</a>
+      <a href="/borrowing.html" class="active">Borrowing</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="issue-panel">
+      <h2>Issue a book</h2>
+      <form id="issue-form" class="issue-form">
+        <select id="book-select" required></select>
+        <select id="member-select" required></select>
+        <button type="submit">Issue</button>
+      </form>
+    </section>
+
+    <p id="message" role="status"></p>
+
+    <div class="list-header">
+      <h2>Loans</h2>
+      <select id="status-filter">
+        <option value="">All loans</option>
+        <option value="active">Currently borrowed</option>
+        <option value="overdue">Overdue</option>
+        <option value="returned">Returned</option>
+      </select>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Book</th>
+            <th>Member</th>
+            <th>Issued</th>
+            <th>Due</th>
+            <th>Returned</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="loans-body"></tbody>
+      </table>
+    </div>
+    <p id="empty-state" hidden>No loans found.</p>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/borrowing.js"></script>
+</body>
+</html>

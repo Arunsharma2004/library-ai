@@ -89,3 +89,23 @@ const membersApi = {
     return request(`/members/${id}`, { method: "DELETE" });
   },
 };
+
+const borrowsApi = {
+  list(filters = {}) {
+    const params = new URLSearchParams();
+    if (filters.status) params.set("status", filters.status);
+    const query = params.toString();
+    return request("/borrows" + (query ? "?" + query : ""));
+  },
+
+  issue(bookId, memberId) {
+    return request("/borrows/issue", {
+      method: "POST",
+      body: JSON.stringify({ book_id: bookId, member_id: memberId }),
+    });
+  },
+
+  returnBook(recordId) {
+    return request(`/borrows/${recordId}/return`, { method: "POST" });
+  },
+};
