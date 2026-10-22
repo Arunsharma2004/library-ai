@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import BaseModel, ConfigDict
 
 
@@ -11,3 +13,10 @@ class UserRead(BaseModel):
 
     id: int
     username: str
+
+
+class SessionRead(BaseModel):
+    """Who is using the app right now. Used by the menu."""
+
+    role: Literal["staff", "visitor"]
+    username: str | None = None

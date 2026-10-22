@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join the Library</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <main class="join-card">
+    <h1>Join the library</h1>
+    <p class="muted">Fill in your details. Library staff will review your request, and then you can borrow books at the desk.</p>
+
+    <form id="join-form">
+      <label for="join-name">Full name</label>
+      <input id="join-name" type="text" maxlength="100" required>
+
+      <label for="join-email">Email</label>
+      <input id="join-email" type="email" required>
+
+      <label for="join-phone">Phone (optional)</label>
+      <input id="join-phone" type="tel" maxlength="20">
+
+      <button type="submit" id="join-submit">Send request</button>
+    </form>
+
+    <p id="join-message" role="status"></p>
+    <p class="muted"><a href="/login.html">Staff sign in</a></p>
+  </main>
+
+  <script src="/js/join.js"></script>
+</body>
+</html>

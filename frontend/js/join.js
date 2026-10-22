@@ -26,7 +26,9 @@ joinForm.addEventListener("submit", async (event) => {
 
     if (response.ok) {
       joinForm.reset();
-      showJoinMessage(data.message, false);
+      showJoinMessage(data.message + " Taking you to the library...", false);
+      setTimeout(() => { window.location.href = "/"; }, 1800);
+      return;  // keep the button disabled while we leave the page
     } else if (typeof data.detail === "string") {
       showJoinMessage(data.detail, true);  // for example the "too many requests" message
     } else {
@@ -34,7 +36,6 @@ joinForm.addEventListener("submit", async (event) => {
     }
   } catch (error) {
     showJoinMessage("Could not reach the server. Please try again.", true);
-  } finally {
-    joinButton.disabled = false;
   }
+  joinButton.disabled = false;
 });

@@ -258,3 +258,10 @@ select {
 .join-card button { margin-top: 1.2rem; }
 .join-success { color: #166534; }
 .join-error { color: #b91c1c; }
+
+/* ---------- Roles ---------- */
+/* Parts marked "staff-only" stay hidden until nav.js confirms the person is staff.
+   This is only for tidiness: the server is what actually refuses visitors. */
+body:not(.role-staff) .staff-only {
+  display: none !important;
+}

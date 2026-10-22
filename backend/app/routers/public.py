@@ -27,6 +27,15 @@ def limit_join_requests(request: Request) -> None:
     status_code=status.HTTP_201_CREATED,
     dependencies=[Depends(limit_join_requests)],
 )
-def join_library(data: JoinRequest, db: Session = Depends(get_db)):
+def join_library(data: JoinRequest, request: Request, db: Session = Depends(get_db)):
     join_service.request_to_join(db, data)
-    return {"message": "Thank you! Your request was received. Library staff will review it."}
+
+    # The visitor can now browse and use the AI. Borrowing still needs staff approval.
+    # If a staff member is already signed in, leave their session as it is.
+    if "user_id" not in request.session:
+        request.session["visitor"] = True
+
+    return {
+        "message": "Thank you! You can now browse books and use the AI. "
+        "Staff will review your request before you can borrow."
+    }

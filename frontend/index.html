@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header class="app-header">
+  <header class="app-header">
     <h1>AI Library</h1>
-       <nav>
+    <nav>
       <a href="/" class="active">Books</a>
       <a href="/members.html">Members</a>
       <a href="/borrowing.html">Borrowing</a>
@@ -23,7 +23,7 @@
       <label class="checkbox-label">
         <input type="checkbox" id="available-only"> Available only
       </label>
-      <button type="button" id="add-book-btn">Add book</button>
+      <button type="button" id="add-book-btn" class="staff-only">Add book</button>
     </section>
 
     <p id="message" role="status"></p>
@@ -37,7 +37,7 @@
             <th>ISBN</th>
             <th>Category</th>
             <th>Available</th>
-            <th>Actions</th>
+            <th class="staff-only">Actions</th>
           </tr>
         </thead>
         <tbody id="books-body"></tbody>
@@ -70,7 +70,7 @@
         <input type="number" id="total-copies" min="1" value="1" required>
       </label>
       <label>Description
-      <textarea id="description" rows="3"></textarea>
+        <textarea id="description" rows="3"></textarea>
       </label>
       <div class="ai-row">
         <button type="button" id="ai-describe-btn" class="btn-secondary btn-small">Write description with AI</button>
@@ -85,8 +85,9 @@
       </div>
     </form>
   </dialog>
-<script src="js/api.js"></script>
-<script src="js/nav.js"></script>
-<script src="js/books.js"></script>
+
+  <script src="js/api.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/books.js"></script>
 </body>
 </html>

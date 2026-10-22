@@ -5,9 +5,22 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from app.database import Base, get_db
-from app.dependencies import get_current_user
+from app.dependencies import (
+    get_current_user,
+    require_staff_or_visitor,
+    site_ai_limiter,
+    visitor_ai_limiter,
+)
 from app.main import app
 from app.models.user import User
+from app.routers.public import join_limiter
+
+
+@pytest.fixture(autouse=True)
+def reset_rate_limiters():
+    """Every test starts with empty rate limiters."""
+    for limiter in (join_limiter, visitor_ai_limiter, site_ai_limiter):
+        limiter.reset()
 
 
 @pytest.fixture()
@@ -44,4 +57,5 @@ def raw_client(session_factory):
 def client(raw_client):
     """A client that is already signed in as a staff user. Most tests use this one."""
     app.dependency_overrides[get_current_user] = lambda: User(id=1, username="test-staff")
+    app.dependency_overrides[require_staff_or_visitor] = lambda: "staff"
     return raw_client

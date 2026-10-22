@@ -33,7 +33,7 @@ async function loadBooks() {
 }
 
 function renderBooks(books) {
-    booksBody.replaceChildren(); // remove the old rows
+  booksBody.replaceChildren(); // remove the old rows
   emptyState.hidden = books.length > 0;
 
   for (const book of books) {
@@ -49,6 +49,7 @@ function renderBooks(books) {
     booksBody.append(row);
   }
 }
+
 function cell(text) {
   const td = document.createElement("td");
   td.textContent = text; // textContent shows text only and never runs HTML
@@ -64,18 +65,9 @@ function availabilityCell(book) {
   return td;
 }
 
-function availabilityCell(book) {
-  const td = document.createElement("td");
-  const badge = document.createElement("span");
-  badge.className = "badge " + (book.available_copies > 0 ? "badge-ok" : "badge-out");
-  badge.textContent = `${book.available_copies} / ${book.total_copies}`;
-  td.append(badge);
-  return td;
-}
-
 function actionsCell(book) {
   const td = document.createElement("td");
-  td.className = "actions";
+  td.className = "actions staff-only"; // hidden from visitors by the CSS
 
   const editButton = document.createElement("button");
   editButton.type = "button";
@@ -105,6 +97,7 @@ async function deleteBook(book) {
     showMessage(error.message, "error");
   }
 }
+
 // Reload the list when a filter changes. For typing we wait 300 ms after the
 // last keystroke, so we don't send a request for every single letter.
 let filterTimer;
@@ -131,7 +124,6 @@ function openDialog(book = null) {
   formError.textContent = "";
 
   if (book) {
-    // Used by the Edit button, which we add in the next step.
     document.getElementById("title").value = book.title;
     document.getElementById("author").value = book.author;
     document.getElementById("isbn").value = book.isbn || "";
@@ -212,4 +204,5 @@ describeButton.addEventListener("click", async () => {
     describeButton.textContent = "Write description with AI";
   }
 });
+
 loadBooks(); // load the books when the page opens
