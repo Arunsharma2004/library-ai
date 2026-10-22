@@ -243,3 +243,18 @@ select {
 /* ---------- AI description button ---------- */
 .ai-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
 .muted { color: var(--muted); font-size: 0.85rem; }
+
+/* ---------- Join page ---------- */
+.join-card {
+  max-width: 420px;
+  margin: 3rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.join-card label { display: block; margin-top: 0.9rem; font-weight: 600; }
+.join-card input { width: 100%; box-sizing: border-box; margin-top: 0.3rem; }
+.join-card button { margin-top: 1.2rem; }
+.join-success { color: #166534; }
+.join-error { color: #b91c1c; }
