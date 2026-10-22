@@ -25,6 +25,13 @@ async function request(path, options = {}) {
     // the response had no JSON body
   }
 
+  // Not signed in (or the session expired): go to the login page.
+  // The login request itself is excluded, because a wrong password also gives 401.
+  if (response.status === 401 && path !== "/auth/login") {
+    window.location.href = "/login.html";
+    throw new Error("Please sign in");
+  }
+
   if (!response.ok) {
     throw new Error(errorMessage(data, response.status));
   }
@@ -34,7 +41,7 @@ async function request(path, options = {}) {
 // Turns the backend's error format into one readable sentence.
 function errorMessage(data, status) {
   if (data && typeof data.detail === "string") {
-    return data.detail;                      // 404 and 409 errors
+    return data.detail;                      // 401, 404 and 409 errors
   }
   if (data && Array.isArray(data.detail)) {  // 422 validation errors
     return data.detail
@@ -44,7 +51,7 @@ function errorMessage(data, status) {
   return `Request failed (${status})`;
 }
 
-// One function per endpoint of the books API.
+// ---------- Books ----------
 const booksApi = {
   list(filters = {}) {
     const params = new URLSearchParams();
@@ -68,6 +75,7 @@ const booksApi = {
   },
 };
 
+// ---------- Members ----------
 const membersApi = {
   list(filters = {}) {
     const params = new URLSearchParams();
@@ -90,6 +98,7 @@ const membersApi = {
   },
 };
 
+// ---------- Borrowing ----------
 const borrowsApi = {
   list(filters = {}) {
     const params = new URLSearchParams();
@@ -107,5 +116,23 @@ const borrowsApi = {
 
   returnBook(recordId) {
     return request(`/borrows/${recordId}/return`, { method: "POST" });
+  },
+};
+
+// ---------- Login ----------
+const authApi = {
+  login(username, password) {
+    return request("/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+    });
+  },
+
+  logout() {
+    return request("/auth/logout", { method: "POST" });
+  },
+
+  me() {
+    return request("/auth/me");
   },
 };
