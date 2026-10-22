@@ -18,7 +18,7 @@ Base.metadata.create_all(bind=engine)
 with SessionLocal() as db:
     create_first_staff(db, settings.ADMIN_USERNAME, settings.ADMIN_PASSWORD)
 
-app = FastAPI(title="AI Library Management System")
+app = FastAPI(title="LibraX — Smart Library Management System")
 
 # Keeps the signed-in user in a signed, HttpOnly cookie that lasts 8 hours.
 app.add_middleware(
