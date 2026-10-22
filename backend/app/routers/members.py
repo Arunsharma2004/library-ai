@@ -2,12 +2,16 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.dependencies import get_current_user
 from app.schemas.member import MemberCreate, MemberRead, MemberUpdate
 from app.services import member_service
 from app.services.errors import BusinessRuleError, DuplicateError, NotFoundError
 
-router = APIRouter(prefix="/api/members", tags=["Members"])
-
+router = APIRouter(
+    prefix="/api/members",
+    tags=["Members"],
+    dependencies=[Depends(get_current_user)],
+)
 
 @router.get("", response_model=list[MemberRead])
 def list_members(

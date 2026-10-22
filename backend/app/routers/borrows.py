@@ -4,11 +4,17 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.dependencies import get_current_user
+from app.models.user import User
 from app.schemas.borrow import BorrowRead, IssueRequest
 from app.services import borrow_service
 from app.services.errors import BusinessRuleError, NotFoundError
 
-router = APIRouter(prefix="/api/borrows", tags=["Borrowing"])
+router = APIRouter(
+    prefix="/api/borrows",
+    tags=["Borrowing"],
+    dependencies=[Depends(get_current_user)],
+)
 
 
 @router.get("", response_model=list[BorrowRead])
@@ -24,9 +30,13 @@ def list_borrows(
 
 
 @router.post("/issue", response_model=BorrowRead, status_code=status.HTTP_201_CREATED)
-def issue_book(data: IssueRequest, db: Session = Depends(get_db)):
+def issue_book(
+    data: IssueRequest,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     try:
-        return borrow_service.issue_book(db, data)
+        return borrow_service.issue_book(db, data, issued_by=user.username)
     except NotFoundError as error:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(error))
     except BusinessRuleError as error:

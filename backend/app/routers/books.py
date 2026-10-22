@@ -2,12 +2,16 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.dependencies import get_current_user
 from app.schemas.book import BookCreate, BookRead, BookUpdate
 from app.services import book_service
 from app.services.errors import BusinessRuleError, DuplicateError, NotFoundError
 
-router = APIRouter(prefix="/api/books", tags=["Books"])
-
+router = APIRouter(
+    prefix="/api/books",
+    tags=["Books"],
+    dependencies=[Depends(get_current_user)],  # every endpoint here needs a signed-in user
+)
 
 @router.get("", response_model=list[BookRead])
 def list_books(
