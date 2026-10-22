@@ -136,3 +136,13 @@ const authApi = {
     return request("/auth/me");
   },
 };
+
+// ---------- AI ----------
+const aiApi = {
+  recommend(answers) {
+    return request("/ai/recommendations", {
+      method: "POST",
+      body: JSON.stringify(answers),
+    });
+  },
+};

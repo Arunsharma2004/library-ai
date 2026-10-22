@@ -8,7 +8,7 @@ from app.models.book import Book  # noqa: F401  (importing registers the table)
 from app.models.borrow import BorrowRecord  # noqa: F401
 from app.models.member import Member  # noqa: F401
 from app.models.user import User  # noqa: F401
-from app.routers import auth, books, borrows, members
+from app.routers import ai, auth, books, borrows, members
 
 # Create any tables that don't exist yet.
 Base.metadata.create_all(bind=engine)
@@ -28,6 +28,7 @@ app.include_router(auth.router)
 app.include_router(books.router)
 app.include_router(members.router)
 app.include_router(borrows.router)
+app.include_router(ai.router)
 
 
 @app.get("/api/health")

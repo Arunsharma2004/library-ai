@@ -1,9 +1,34 @@
-// Runs on every page except the login page. It shows who is signed in
-// and adds the Log out button to the header.
+// Runs on every page except the login page. It builds the navigation bar,
+// shows who is signed in, and adds the Log out button.
+const NAV_LINKS = [
+  { href: "/", label: "Books" },
+  { href: "/members.html", label: "Members" },
+  { href: "/borrowing.html", label: "Borrowing" },
+  { href: "/recommend.html", label: "Find a book" },
+];
+
 (async function () {
   const header = document.querySelector(".app-header");
   if (!header) return;
 
+  // Rebuild the navigation from the list above.
+  const oldNav = header.querySelector("nav");
+  if (oldNav) oldNav.remove();
+
+  const nav = document.createElement("nav");
+  for (const link of NAV_LINKS) {
+    const anchor = document.createElement("a");
+    anchor.href = link.href;
+    anchor.textContent = link.label;
+    const isHere =
+      location.pathname === link.href ||
+      (link.href === "/" && location.pathname === "/index.html");
+    if (isHere) anchor.className = "active";
+    nav.append(anchor);
+  }
+  header.append(nav);
+
+  // Who is signed in, and the Log out button.
   try {
     const user = await authApi.me();
 

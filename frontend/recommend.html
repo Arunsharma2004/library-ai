@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Library - Find a book</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>AI Library</h1>
+  </header>
+
+  <main>
+    <section class="issue-panel">
+      <h2>Find your next book</h2>
+      <form id="rec-form" class="rec-form">
+        <label>What kind of book are you in the mood for?
+          <select id="mood">
+            <option>Fiction</option>
+            <option>Non-fiction</option>
+            <option>Science and technology</option>
+            <option>History</option>
+            <option>Self-help</option>
+            <option>Mystery and thriller</option>
+            <option>Fantasy and sci-fi</option>
+            <option>Surprise me</option>
+          </select>
+        </label>
+
+        <label>What are you interested in?
+          <input type="text" id="interests" required maxlength="200"
+                 placeholder="For example: space, business, friendship, detective stories">
+        </label>
+
+        <label>How long should it be?
+          <select id="length">
+            <option value="any">Any length</option>
+            <option value="short">Short and quick</option>
+            <option value="long">Long and in-depth</option>
+          </select>
+        </label>
+
+        <div><button type="submit" id="rec-btn">Recommend books</button></div>
+      </form>
+    </section>
+
+    <p id="message" role="status"></p>
+    <div id="results" class="rec-grid"></div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/recommend.js"></script>
+</body>
+</html>
