@@ -1,6 +1,13 @@
 // All communication with the backend lives in this file.
 const API_BASE = "/api";
 
+// Where to send someone who is not signed in. Staff pages go to the staff login,
+// everything else goes to the Join page, which is the friendly front door.
+function signInPage() {
+  const staffPages = ["/members.html", "/borrowing.html"];
+  return staffPages.includes(window.location.pathname) ? "/login.html" : "/join.html";
+}
+
 // Sends one request and returns the parsed JSON (or null for "204 No Content").
 // If anything goes wrong it throws an Error with a readable message.
 async function request(path, options = {}) {
@@ -25,10 +32,10 @@ async function request(path, options = {}) {
     // the response had no JSON body
   }
 
-  // Not signed in (or the session expired): go to the login page.
+  // Not signed in (or the session expired): go to the sign-in page.
   // The login request itself is excluded, because a wrong password also gives 401.
   if (response.status === 401 && path !== "/auth/login") {
-    window.location.href = "/login.html";
+     window.location.href = signInPage();
     throw new Error("Please sign in");
   }
 

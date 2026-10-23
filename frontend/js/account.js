@@ -67,7 +67,7 @@ async function loadAccount() {
   try {
     const response = await fetch("/api/my/account");
     if (response.status === 401) {
-      window.location.href = "/login.html";
+       window.location.href = "/join.html";
       return;
     }
     if (response.status === 404) {

@@ -21,7 +21,7 @@ const NAV_LINKS = [
   try {
     const response = await fetch("/api/auth/session");
     if (!response.ok) {
-      window.location.href = "/login.html";  // nobody is signed in
+      window.location.href = signInPage();  // nobody is signed in
       return;
     }
     session = await response.json();
