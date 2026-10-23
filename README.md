@@ -5,7 +5,8 @@ loans. Visitors can join the library, browse the catalog and get AI help finding
 
 **Stack:** FastAPI · SQLAlchemy · Pydantic · SQLite (PostgreSQL-ready) · vanilla HTML/CSS/JavaScript · Google Gemini
 
-> Live demo: coming soon.
+> **Live demo:** <https://librax-6t46.onrender.com>
+> The free server sleeps when idle, so the first visit after a quiet period can take about a minute to load.
 
 ## Features
 
