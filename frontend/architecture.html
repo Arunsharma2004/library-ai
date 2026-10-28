@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LibraX - How it is built</title>
+<style>
+:root{--navy:#1e293b;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--bg:#f1f5f9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.5;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+.top{background:var(--navy);color:#fff}.top .wrap{display:flex;gap:16px;align-items:center;padding-top:14px;padding-bottom:14px}
+.top a{color:#fff;text-decoration:none}.brand{font-weight:700;font-size:1.25rem}.top nav{margin-left:auto;display:flex;gap:16px}
+h1{margin:1.6rem 0 .3rem;font-size:1.9rem}h2{margin:0 0 .2rem;font-size:1.3rem}.lead,.sub{color:var(--muted);margin:0 0 14px}
+section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin:20px 0}
+.scroll{overflow-x:auto}.scroll svg{min-width:720px;width:100%;height:auto;display:block}
+svg text{text-anchor:middle;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.t{font-size:15px;font-weight:700;fill:#0f172a}.s{font-size:12px;fill:#475569}.l{font-size:12px;fill:#64748b}
+.ct{font-size:12px;font-weight:700;letter-spacing:.06em;fill:#475569;text-anchor:start!important}
+.a{stroke:#475569;stroke-width:1.8;fill:none}.tr{stroke:#94a3b8;stroke-width:1.8;fill:none}
+.b{fill:#eff6ff;stroke:#3b82f6;stroke-width:1.5}.pg{fill:#f0fdf4;stroke:#22c55e;stroke-width:1.5}
+.st{fill:#fff7ed;stroke:#f97316;stroke-width:1.5}.ext{fill:#faf5ff;stroke:#a855f7;stroke-width:1.5}
+.u{fill:#1e293b;stroke:#1e293b}.u + .t,.u + .t + .s{fill:#fff}
+.sec{fill:#fef2f2;stroke:#ef4444;stroke-width:1.5}.dp{fill:#fffbeb;stroke:#f59e0b;stroke-width:1.5}
+.root{fill:#1e293b;stroke:#1e293b}.root + .t{fill:#fff}.bk{fill:#eff6ff;stroke:#3b82f6;stroke-width:1.5}.fe{fill:#f0fdf4;stroke:#22c55e;stroke-width:1.5}
+.c,.cf,.cb,.cd{fill:#f8fafc;stroke:#cbd5e1;stroke-width:1.5;stroke-dasharray:none}.cf{fill:#f7fdf9}.cb{fill:#f6f9ff}.cd{fill:#fffdf5}
+footer{color:var(--muted);text-align:center;padding:20px 16px 40px;font-size:.9rem}
+</style></head><body>
+<header class="top"><div class="wrap"><a class="brand" href="/">LibraX</a><span>How it is built</span><nav><a href="/">Back to the app</a><a href="https://github.com/Arunsharma2004/library-ai">GitHub</a></nav></div></header>
+<main class="wrap">
+<h1>How LibraX is built</h1><p class="lead">Three pictures: the whole system, the project folders, and what happens on one click.</p>
+<section><h2>1. The whole system</h2><p class="sub">From the people using it, through the browser and the server, to the database, the AI and the live deployment.</p><div class="scroll"><svg viewBox="0 0 960 585" role="img" aria-label="System architecture"><rect class="u" x="200" y="10" width="220" height="44" rx="8"/><text class="t" x="310.0" y="29.0">Visitor</text><text class="s" x="310.0" y="46.0">joined, browsing + AI</text>
+<rect class="u" x="540" y="10" width="220" height="44" rx="8"/><text class="t" x="650.0" y="29.0">Staff (librarian)</text><text class="s" x="650.0" y="46.0">manages everything</text>
+<line class="a" x1="310" y1="54" x2="310" y2="100" marker-end="url(#ah)"/>
+<line class="a" x1="650" y1="54" x2="650" y2="100" marker-end="url(#ah)"/>
+<rect class="cf" x="40" y="100" width="880" height="112" rx="12"/><text class="ct" x="56" y="122">BROWSER  -  frontend (HTML, CSS, vanilla JavaScript)</text>
+<rect class="pg" x="59" y="134" width="110" height="38" rx="8"/><text class="t" x="114.0" y="158.0">Join / Login</text>
+<rect class="pg" x="181" y="134" width="110" height="38" rx="8"/><text class="t" x="236.0" y="158.0">Books</text>
+<rect class="pg" x="303" y="134" width="110" height="38" rx="8"/><text class="t" x="358.0" y="158.0">Find a book</text>
+<rect class="pg" x="425" y="134" width="110" height="38" rx="8"/><text class="t" x="480.0" y="158.0">Assistant</text>
+<rect class="pg" x="547" y="134" width="110" height="38" rx="8"/><text class="t" x="602.0" y="158.0">My account</text>
+<rect class="st" x="669" y="134" width="110" height="38" rx="8"/><text class="t" x="724.0" y="158.0">Members</text>
+<rect class="st" x="791" y="134" width="110" height="38" rx="8"/><text class="t" x="846.0" y="158.0">Borrowing</text>
+<text class="l" x="60" y="196" style="text-anchor:start">Orange = staff-only pages. Every call goes through api.js.</text>
+<line class="a" x1="480" y1="212" x2="480" y2="252" marker-end="url(#ah)"/>
+<text class="l" x="496" y="238" style="text-anchor:start">HTTPS  -  JSON  -  signed login cookie</text>
+<rect class="cb" x="40" y="252" width="880" height="176" rx="12"/><text class="ct" x="56" y="274">BACKEND  -  FastAPI (Python)</text>
+<rect class="b" x="70" y="288" width="170" height="58" rx="8"/><text class="t" x="155.0" y="314.0">Routers</text><text class="s" x="155.0" y="331.0">URLs, who may call</text>
+<rect class="b" x="290" y="288" width="170" height="58" rx="8"/><text class="t" x="375.0" y="314.0">Schemas</text><text class="s" x="375.0" y="331.0">Pydantic validation</text>
+<rect class="b" x="510" y="288" width="170" height="58" rx="8"/><text class="t" x="595.0" y="314.0">Services</text><text class="s" x="595.0" y="331.0">business rules</text>
+<rect class="b" x="730" y="288" width="170" height="58" rx="8"/><text class="t" x="815.0" y="314.0">Models</text><text class="s" x="815.0" y="331.0">database tables</text>
+<line class="a" x1="240" y1="317" x2="290" y2="317" marker-end="url(#ah)"/>
+<line class="a" x1="460" y1="317" x2="510" y2="317" marker-end="url(#ah)"/>
+<line class="a" x1="680" y1="317" x2="730" y2="317" marker-end="url(#ah)"/>
+<rect class="sec" x="70" y="370" width="400" height="44" rx="8"/><text class="t" x="270.0" y="389.0">Security</text><text class="s" x="270.0" y="406.0">signed session  -  staff / visitor roles  -  rate limits</text>
+<rect class="b" x="510" y="370" width="170" height="44" rx="8"/><text class="t" x="595.0" y="389.0">AI client</text><text class="s" x="595.0" y="406.0">ai/client.py</text>
+<line class="a" x1="595" y1="346" x2="595" y2="370" marker-end="url(#ah)"/>
+<line class="a" x1="815" y1="346" x2="815" y2="478" marker-end="url(#ah)"/>
+<line class="a" x1="595" y1="414" x2="595" y2="478" marker-end="url(#ah)"/>
+<rect class="ext" x="485" y="478" width="220" height="64" rx="8"/><text class="t" x="595.0" y="507.0">Google Gemini</text><text class="s" x="595.0" y="524.0">recommend, chat, describe</text>
+<rect class="ext" x="725" y="478" width="180" height="64" rx="8"/><text class="t" x="815.0" y="507.0">PostgreSQL</text><text class="s" x="815.0" y="524.0">Neon (SQLite on a laptop)</text>
+<rect class="cd" x="40" y="452" width="420" height="100" rx="12"/><text class="ct" x="56" y="474">DEPLOYMENT</text>
+<rect class="dp" x="55" y="488" width="110" height="38" rx="8"/><text class="t" x="110.0" y="512.0">GitHub</text>
+<rect class="dp" x="195" y="488" width="110" height="38" rx="8"/><text class="t" x="250.0" y="512.0">Docker image</text>
+<rect class="dp" x="335" y="488" width="110" height="38" rx="8"/><text class="t" x="390.0" y="512.0">Render</text>
+<line class="a" x1="165" y1="507" x2="195" y2="507" marker-end="url(#ah)"/>
+<line class="a" x1="305" y1="507" x2="335" y2="507" marker-end="url(#ah)"/>
+<line class="a" x1="390" y1="488" x2="390" y2="432" marker-end="url(#ah)" stroke-dasharray="6 4"/>
+<text class="l" x="402" y="468" style="text-anchor:start">runs the app</text>
+<text class="l" x="250" y="572" style="text-anchor:middle">UptimeRobot checks /api/health every 5 min</text></svg></div></section>
+<section><h2>2. The project tree</h2><p class="sub">Where each piece of code lives. Backend in blue, frontend in green.</p><div class="scroll"><svg viewBox="0 0 960 625" role="img" aria-label="Project folder tree"><path class="tr" d="M160 403.0 H185 V218.0 H210"/>
+<path class="tr" d="M160 403.0 H185 V428.0 H210"/>
+<path class="tr" d="M160 403.0 H185 V538.0 H210"/>
+<path class="tr" d="M160 403.0 H185 V588.0 H210"/>
+<path class="tr" d="M360 218.0 H390 V138.0 H420"/>
+<path class="tr" d="M360 218.0 H390 V298.0 H420"/>
+<path class="tr" d="M360 428.0 H390 V378.0 H420"/>
+<path class="tr" d="M360 428.0 H390 V428.0 H420"/>
+<path class="tr" d="M360 428.0 H390 V478.0 H420"/>
+<path class="tr" d="M590 138.0 H620 V38.0 H650"/>
+<path class="tr" d="M590 138.0 H620 V88.0 H650"/>
+<path class="tr" d="M590 138.0 H620 V138.0 H650"/>
+<path class="tr" d="M590 138.0 H620 V188.0 H650"/>
+<path class="tr" d="M590 138.0 H620 V238.0 H650"/>
+<rect class="root" x="10" y="385" width="150" height="36" rx="8"/><text class="t" x="85.0" y="408.0">library-ai/</text>
+<rect class="bk" x="210" y="200" width="150" height="36" rx="8"/><text class="t" x="285.0" y="223.0">backend/</text>
+<rect class="fe" x="210" y="410" width="150" height="36" rx="8"/><text class="t" x="285.0" y="433.0">frontend/</text>
+<rect class="dp" x="210" y="520" width="340" height="36" rx="8"/><text class="t" x="380.0" y="543.0">Dockerfile  -  packs the app for Render</text>
+<rect class="dp" x="210" y="570" width="340" height="36" rx="8"/><text class="t" x="380.0" y="593.0">README.md  -  how to run and use it</text>
+<rect class="bk" x="420" y="120" width="170" height="36" rx="8"/><text class="t" x="505.0" y="143.0">app/</text>
+<rect class="bk" x="420" y="280" width="300" height="36" rx="8"/><text class="t" x="570.0" y="303.0">tests/  -  119 automated tests</text>
+<rect class="fe" x="420" y="360" width="300" height="36" rx="8"/><text class="t" x="570.0" y="383.0">8 pages  -  books, members, join ...</text>
+<rect class="fe" x="420" y="410" width="300" height="36" rx="8"/><text class="t" x="570.0" y="433.0">js/  -  api.js, nav.js, page scripts</text>
+<rect class="fe" x="420" y="460" width="300" height="36" rx="8"/><text class="t" x="570.0" y="483.0">css/  -  styles.css</text>
+<rect class="bk" x="650" y="20" width="300" height="36" rx="8"/><text class="t" x="800.0" y="43.0">routers/  -  HTTP endpoints</text>
+<rect class="bk" x="650" y="70" width="300" height="36" rx="8"/><text class="t" x="800.0" y="93.0">schemas/  -  validation (Pydantic)</text>
+<rect class="bk" x="650" y="120" width="300" height="36" rx="8"/><text class="t" x="800.0" y="143.0">services/  -  business rules</text>
+<rect class="bk" x="650" y="170" width="300" height="36" rx="8"/><text class="t" x="800.0" y="193.0">models/  -  database tables</text>
+<rect class="bk" x="650" y="220" width="300" height="36" rx="8"/><text class="t" x="800.0" y="243.0">ai/  -  Gemini wrapper</text></svg></div></section>
+<section><h2>3. One request, start to end</h2><p class="sub">What happens when a librarian issues a book.</p><div class="scroll"><svg viewBox="0 0 960 190" role="img" aria-label="One request"><rect class="pg" x="10" y="30" width="150" height="64" rx="8"/><text class="t" x="85.0" y="59.0">1  Browser</text><text class="s" x="85.0" y="76.0">staff clicks Issue</text>
+<line class="a" x1="160" y1="62" x2="200" y2="62" marker-end="url(#ah)"/>
+<rect class="pg" x="200" y="30" width="150" height="64" rx="8"/><text class="t" x="275.0" y="59.0">2  api.js</text><text class="s" x="275.0" y="76.0">sends an issue request</text>
+<line class="a" x1="350" y1="62" x2="390" y2="62" marker-end="url(#ah)"/>
+<rect class="b" x="390" y="30" width="150" height="64" rx="8"/><text class="t" x="465.0" y="59.0">3  Router</text><text class="s" x="465.0" y="76.0">staff only? valid body?</text>
+<line class="a" x1="540" y1="62" x2="580" y2="62" marker-end="url(#ah)"/>
+<rect class="b" x="580" y="30" width="150" height="64" rx="8"/><text class="t" x="655.0" y="59.0">4  Service</text><text class="s" x="655.0" y="76.0">active? copy free?</text>
+<line class="a" x1="730" y1="62" x2="770" y2="62" marker-end="url(#ah)"/>
+<rect class="ext" x="770" y="30" width="150" height="64" rx="8"/><text class="t" x="845.0" y="59.0">5  Database</text><text class="s" x="845.0" y="76.0">save loan, copies - 1</text>
+<path class="a" d="M845 94 V150 H85 V94" fill="none" stroke-dasharray="6 4" marker-end="url(#ah)"/>
+<text class="l" x="465" y="172" style="text-anchor:middle">JSON result  -  or a clear error message the page shows</text></svg></div></section>
+</main>
+<footer>LibraX - <a href="/">Back to the app</a></footer>
+<svg width="0" height="0" style="position:absolute"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#475569"/></marker></defs></svg>
+</body></html>

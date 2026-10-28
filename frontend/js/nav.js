@@ -82,6 +82,13 @@ const NAV_LINKS = [
     }
   });
 
-  box.append(name, logoutButton);
-  header.append(box);
+  const infoLink = document.createElement("a");
+  infoLink.href = "/architecture.html";
+  infoLink.target = "_blank";
+  infoLink.rel = "noopener";
+  infoLink.className = "btn-link";
+  infoLink.textContent = "How it's built";
+
+  box.append(name, infoLink, logoutButton);
+    header.append(box);
 })();
